@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app-deployment
+spec:
+  replicas: 2 # At least two replicas
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+        - name: python-app
+          image: mousat/my-python-app:latest
+
+          ports:
+            - containerPort: 8017 # The port the container listens on
+          env:
+            - name: MY_WEB_APP_STATUS
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: MY_WEB_APP_STATUS

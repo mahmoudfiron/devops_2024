@@ -1,0 +1,24 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.MAHMOUDFIRON }}
+          password: ${{ secrets.MMMF123456 }}
+
+      - name: Build Docker image
+        run: docker build -t mahmoudfiron/devops-final-app:latest .
+
+      - name: Push Docker image
+        run: docker push mahmoudfiron/devops-final-app:latest
